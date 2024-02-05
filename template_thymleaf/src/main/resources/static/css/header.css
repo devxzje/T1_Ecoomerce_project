@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.menu ul {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.menu ul {
+    list-style: none;
+}
+
+.menu ul li {
+    padding: 1rem;
+}
+
+.menu ul li a {
+    color: white;
+}
+
+.menu {
+    background-color: rgb(3, 3, 3);
+}
+
+.sub_menu a {
+    color: black !important;
+}
+
+/* Hide the dropdown menu by default */
+.dropdown-menu {
+    display: none;
+}
+
+/* Show the dropdown menu when hovering over the "APPAREL" item */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+

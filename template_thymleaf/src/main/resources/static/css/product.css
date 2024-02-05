@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*content*/
+.main_section1 h1 a {
+    color: black;
+}
+
+.main_section1 h2 a {
+    color: black;
+}
+
+.product_list {
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.product_item {
+    width: 25%;
+    padding: 50px;
+}
+
+.product-name a {
+    color: black;
+}
+
+.product-price a {
+    color: black;
+}
+
+/*add*/
+.product_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.product-name,
+.product-price {
+    margin-top: 10px; /* Adjust margin as needed */
+}
