@@ -52,6 +52,62 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<Product> paginatedFilterProducts(String keyword, Pageable pageable) {
+
+        List<Product> products = null;
+
+        if(keyword != null){
+            products = productRepository.filter(keyword);
+        }else {
+            products = productRepository.findAll();
+        }
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+        List<Product> list;
+
+        if (products.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, products.size());
+            list = products.subList(startItem, toIndex);
+        }
+
+        Page<Product> productPage = new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+        return productPage;
+    }
+
+    @Override
+    public Page<Product> paginatedFilterByCategoryAndKeyword(String category, String keyword, Pageable pageable) {
+        List<Product> products;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            products = productRepository.filter(keyword);
+        } else {
+            products = productRepository.findAllByCategory(category);
+        }
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+        List<Product> list;
+
+        if (products.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, products.size());
+            list = products.subList(startItem, toIndex);
+        }
+
+        Page<Product> productPage = new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+        return productPage;
+    }
+
+
+    @Override
     public Product findById(Integer id) throws NotFoundException {
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {

@@ -51,11 +51,12 @@
                     >APPAREL</a
                     >
                     <div class="sub_menu dropdown-menu">
-                        <a class="dropdown-item" href="#">ALL</a>
-                        <a class="dropdown-item" href="#">SHIRTS</a>
-                        <a class="dropdown-item" href="#">HOODIES AND SWEATSHIRT</a>
+                        <a class="dropdown-item" th:href="@{'/product'}">ALL</a>
+<!--                        <a class="dropdown-item" th:href="@{'/product?keyword=TOPS&T-SHIRTS'}">SHIRTS</a>-->
+                        <a class="dropdown-item" th:href="@{'/product?keyword=TOPS&T-SHIRTS'}">SHIRTS</a>
+                        <a class="dropdown-item" th:href="@{'/product?keyword=HOODIES&SWEATSHIRTS'}">HOODIES AND SWEATSHIRT</a>
                         <a class="dropdown-item" href="#">JACKETS</a>
-                        <a class="dropdown-item" href="#">PANTS</a>
+                        <a class="dropdown-item" th:href="@{'/product?keyword=pants'}">PANTS</a>
                     </div>
                 </li>
                 <li><a href="">UNIFORM</a></li>

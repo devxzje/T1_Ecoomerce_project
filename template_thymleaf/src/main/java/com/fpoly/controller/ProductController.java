@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +33,13 @@ public class ProductController {
     public String listProducts(
             Model model,
             @RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size) {
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("keyword") Optional<String> keyword) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(8);
 
-        Page<Product> products = productService.paginatedProducts(PageRequest.of(currentPage - 1, pageSize));
+//        Page<Product> products = productService.paginatedProducts(PageRequest.of(currentPage - 1, pageSize));
+        Page<Product> products = productService.paginatedFilterProducts(keyword.orElse(""), PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("products", products);
 
@@ -46,6 +49,7 @@ public class ProductController {
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
+//            model.addAttribute("keyword", keyword.orElse(""));
         }
 
         return "html/product/product";
