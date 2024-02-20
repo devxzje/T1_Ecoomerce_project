@@ -32,6 +32,9 @@ public class ShoppingCartDetail {
     @Column(name = "product_id", insertable = false, updatable = false)
     private Integer productId;
 
+    @Column(name = "size_id", insertable = false, updatable = false)
+    private Integer sizeId;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
     private ShoppingCart cart;
@@ -39,6 +42,10 @@ public class ShoppingCartDetail {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "size_id", referencedColumnName = "id")
+    private Size size;
 
     @Override
     public int hashCode() {

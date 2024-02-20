@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -67,7 +67,7 @@
     [[${message}]]
 </div>
 
-<div class="container pb-5" th:each="cartItem : ${cartItems}">
+<div class="container pb-5" >
     <div class="header">
         <h1 class="text-center p-5">Cart</h1>
     </div>
@@ -81,15 +81,27 @@
         </div>
         <hr />
 
-        <div class="cart_items row align-items-center pt-5" id="list_items" >
+        <div class="cart_items row align-items-center pt-5" id="list_items" th:each="cartItem : ${cartItems}">
             <div class="product_image col-md-2">
-                <img th:src="@{cartItem.product.thumbail}" alt="" />
+                <img th:src="${cartItem.product.thumbnail}" alt="" />
             </div>
 
+<!--            <div class="product_info col-md-5">-->
+<!--                <span th:text="${cartItem.product.name}"></span>-->
+<!--                <br />-->
+<!--                <span th:text="${cartItem.product.sizes.name}"></span>-->
+<!--                <br />-->
+<!--                <span th:text="${#numbers.formatInteger(cartItem.product.price, 3, 'POINT')} + ' '+ VND"></span>-->
+<!--            </div>-->
+
             <div class="product_info col-md-5">
-                <span th:text="@{cartItem.product.name}"></span>
+                <span th:text="${cartItem.product.name}"></span>
                 <br />
-                <span th:text="@{cartItem.product.sizes.name}"></span>
+                <!-- Iterate over sizes and display each size's name -->
+<!--                <div th:each="size : ${cartItem.product.sizes}">-->
+                    <span th:text="${cartItem.size.name}"></span>
+<!--                    <span th:if="${size.product.id == cartItem.product.id}" th:text="${size.size.name}"></span>-->
+<!--                </div>-->
                 <br />
                 <span th:text="${#numbers.formatInteger(cartItem.product.price, 3, 'POINT')} + ' '+ VND"></span>
             </div>
@@ -103,7 +115,7 @@
                         <input
                                 type="text"
                                 id="quantity1"
-                                value="1"
+                                th:value="${cartItem.quantity}"
                                 class="product-qty form-control"
                         />
                         <button onclick="increaseQuantity(this)" class="btn btn-sm">
@@ -119,7 +131,7 @@
             </div>
 
             <div class="total col-md-2 text-right">
-                <span>2.422.065₫</span>
+                <span th:text="${#numbers.formatInteger(cartItem.quantity * cartItem.product.price, 3, 'POINT')}"></span>
             </div>
         </div>
     </div>
@@ -134,7 +146,11 @@
         </div>
 
         <div class="cart_recap col-md-7 text-md-right"> <!-- Add text-md-right to align content to the right in medium and larger screens -->
-            <span th:text="${#numbers.formatInteger(cartItem.totalPrice, 3, 'POINT')} + ' '+ VND">Total: 2.422.065 VND</span><br>
+<!--            <span th:text="${#numbers.formatInteger(cartItem.totalPrice, 3, 'POINT')} + ' '+ VND"></span><br>-->
+<!--            <span th:text="${#numbers.formatInteger(cartItem.totalPrice, 3, 'POINT')} + ' '+ VND"></span>-->
+<!--            <span th:unless="${cartItem != null}">N/A</span>-->
+            <span th:text="${total}"></span>
+            <br>
             <button class="btn btn-dark mt-5">Check out</button>
         </div>
     </div>

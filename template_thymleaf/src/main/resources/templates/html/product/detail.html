@@ -47,19 +47,20 @@
                         <div class="size-chart">
                             <img th:src="${product.sizeChartUrl}" class="img-fluid" alt="Size Chart">
                         </div>
-                        <label for="size">Size:</label>
-                        <select id="size" name="sizelist" class="form-control mb-3" >
-                            <option value="" th:each="size : ${sizes}" th:if="${size.getQuantity() == 0}" th:attr="disabled=true">
+                        <label>Size:</label>
+                        <select  name="sizeId" class="form-control mb-3" >
+                            <option th:each="size : ${sizes}" th:value="${size.size.id}"  th:if="${size.getQuantity() == 0}" th:attr="disabled=true">
                                 [[${size.size.name}]]
                             </option>
-                            <option value="" th:each="size : ${sizes}" th:unless="${size.getQuantity() == 0}">
+                            <option  th:each="size : ${sizes}" th:value="${size.size.id}" th:unless="${size.getQuantity() == 0}">
                                 [[${size.size.name}]]
                             </option>
                         </select>
+
                         <div class="number-input">
-                            <button onclick="decreaseQuantity()"><i class="fas fa-minus"></i></button>
+                            <button onclick="decreaseQuantity(this); return false;"><i class="fas fa-minus"></i></button>
                             <input type="text" id="quantity" name="quantity" value="1" class="product-qty">
-                            <button onclick="increaseQuantity()"><i class="fas fa-plus"></i></button>
+                            <button onclick="increaseQuantity(this); return false;"><i class="fas fa-plus"></i></button>
                         </div>
                         <div class="add-to-cart">
                             <button type="submit" class="btn btn-primary btn-block">Add to cart</button>
@@ -72,20 +73,57 @@
     </div>
 
     <div th:replace="html/fragments/footer :: footer"></div>
-    <script>
-        function increaseQuantity() {
-            var quantityInput = document.getElementById('quantity');
-            var currentValue = parseInt(quantityInput.value);
-            quantityInput.value = currentValue + 1;
-        }
+<!--    <script>-->
+        // function increaseQuantity() {
+        //     var quantityInput = document.getElementById('quantity');
+        //     var currentValue = parseInt(quantityInput.value);
+        //     quantityInput.value = currentValue + 1;
+        // }
+        //
+        // function decreaseQuantity() {
+        //     var quantityInput = document.getElementById('quantity');
+        //     var currentValue = parseInt(quantityInput.value);
+        //     if (currentValue > 1) {
+        //         quantityInput.value = currentValue - 1;
+        //     }
+        // }
 
-        function decreaseQuantity() {
-            var quantityInput = document.getElementById('quantity');
-            var currentValue = parseInt(quantityInput.value);
+        let quantityValue;
+
+        function decreaseQuantity(button) {
+            let quantityInput = button.parentNode.querySelector(".number-input");
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+
+            }
+        }
+        function increaseQuantity(button) {
+            let quantityInput = button.parentNode.querySelector(".number-input");
+            let currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+
+        }
+<!--    </script>-->
+    <script>
+        function decreaseQuantity(button) {
+            let quantityInput = button.parentNode.querySelector(".product-qty");
+            let currentValue = parseInt(quantityInput.value);
             if (currentValue > 1) {
                 quantityInput.value = currentValue - 1;
             }
+            // Prevent form submission
+            return false;
+        }
+
+        function increaseQuantity(button) {
+            let quantityInput = button.parentNode.querySelector(".product-qty");
+            let currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+            // Prevent form submission
+            return false;
         }
     </script>
+
 </body>
 </html>
