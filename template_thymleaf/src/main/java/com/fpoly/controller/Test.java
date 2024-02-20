@@ -9,6 +9,6 @@ public class Test {
     @GetMapping("/index")
     public String test(){
 
-        return "html/fragments/footer";
+        return "html/cart/cart";
     }
 }

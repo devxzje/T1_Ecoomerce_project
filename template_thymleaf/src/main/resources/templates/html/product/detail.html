@@ -20,6 +20,8 @@
 
     <div class="py-4 detail_inner">
         <div class="container" th:object="${product}">
+            <form th:action="@{/cart/add}" method="post">
+                <input type="hidden" name="id" th:value="${product.id}">
             <div class="row detail_area">
                 <div class="col-md-6">
                     <div class="row">
@@ -56,15 +58,16 @@
                         </select>
                         <div class="number-input">
                             <button onclick="decreaseQuantity()"><i class="fas fa-minus"></i></button>
-                            <input type="text" id="quantity" value="1" class="product-qty">
+                            <input type="text" id="quantity" name="quantity" value="1" class="product-qty">
                             <button onclick="increaseQuantity()"><i class="fas fa-plus"></i></button>
                         </div>
                         <div class="add-to-cart">
-                            <button class="btn btn-primary btn-block">Add to cart</button>
+                            <button type="submit" class="btn btn-primary btn-block">Add to cart</button>
                         </div>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 

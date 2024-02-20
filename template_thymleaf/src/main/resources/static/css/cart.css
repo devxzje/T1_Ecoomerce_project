@@ -1,0 +1,48 @@
+
+.product_image img {
+    width: 100%;
+    max-width: 100px; /* Adjust image width as needed */
+    height: auto;
+}
+
+.product_info {
+    padding-left: 10px; /* Add some left padding */
+}
+
+.quantity {
+    align-items: center;
+    /* width: 160px; */
+    /* border: 1px solid #ced4da;
+    border-radius: 0.25rem; */
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.input_quantity {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.remove button a {
+    color: black;
+}
+
+.quantity button {
+    background-color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
+.quantity button i {
+    font-size: 1.25rem;
+    color: #6c757d;
+}
+
+.quantity input {
+    text-align: center;
+    border: none;
+    /* width: 100%; */
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: #ffffff;
+}

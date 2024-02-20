@@ -24,6 +24,5 @@ public class Category {
     @Column(name = "status")
     private String status;
 
-    private String slug;
 
 }

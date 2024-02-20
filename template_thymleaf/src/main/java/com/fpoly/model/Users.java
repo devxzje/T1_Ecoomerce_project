@@ -6,17 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Table(name = "User")
+@Table(name = "Users")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -47,7 +47,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name="role_id", nullable=false)
-    private Role role;
+    private Roles role;
 
     @OneToOne(mappedBy = "user")
     private ShoppingCart shoppingCart;

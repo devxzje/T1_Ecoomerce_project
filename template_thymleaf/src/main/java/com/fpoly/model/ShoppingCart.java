@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Table(name = "Shopping_Cart")
@@ -31,9 +32,21 @@ public class ShoppingCart {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private Users user;
 
     @OneToMany(mappedBy = "cart")
     private Set<ShoppingCartDetail> shoppingCartDetails;
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        ShoppingCart that = (ShoppingCart) obj;
+        return Objects.equals(id, that.id);
+    }
 }

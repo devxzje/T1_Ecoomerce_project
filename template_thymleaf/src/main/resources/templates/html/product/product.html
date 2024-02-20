@@ -15,6 +15,11 @@
 </head>
 <body>
 
+<div class="alert alert-success text-center" th:if="${message}">
+    [[${message}]]
+</div>
+
+
 <div th:replace="html/fragments/header :: header"></div>
 
 <div th:replace="html/fragments/carousel :: carousel"></div>

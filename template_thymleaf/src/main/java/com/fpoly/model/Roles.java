@@ -8,13 +8,13 @@ import lombok.ToString;
 
 import java.util.Set;
 
-@Table(name = "Role")
+@Table(name = "Roles")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Role {
+public class Roles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +27,5 @@ public class Role {
     private String status;
 
     @OneToMany(mappedBy = "role")
-    private Set<User> users;
+    private Set<Users> users;
 }

@@ -2,7 +2,6 @@ package com.fpoly.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.aspectj.weaver.ast.Or;
 
 import java.sql.Date;
 import java.util.List;
@@ -38,7 +37,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private Users user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<OrderDetail> orderDetails;
