@@ -9,4 +9,6 @@ public interface ShoppingCartService {
 
     ShoppingCart addToCart(Product product, Size size, Integer quantity, Users user);
     ShoppingCart updateCart(Product product, Size size, Integer quantity, Users user);
+
+    ShoppingCart deleteFromCart(Product product, Size size, Users user);
 }

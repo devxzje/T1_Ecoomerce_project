@@ -32,6 +32,11 @@
         .input_quantity {
             border: 1px solid #ced4da;
             border-radius: 0.25rem;
+            background-color: #ffffff;
+        }
+
+        #quantity1{
+            background-color: #ffffff;
         }
 
         .remove button a {
@@ -85,53 +90,44 @@
             <div class="product_image col-md-2">
                 <img th:src="${cartItem.product.thumbnail}" alt="" />
             </div>
-
-<!--            <div class="product_info col-md-5">-->
-<!--                <span th:text="${cartItem.product.name}"></span>-->
-<!--                <br />-->
-<!--                <span th:text="${cartItem.product.sizes.name}"></span>-->
-<!--                <br />-->
-<!--                <span th:text="${#numbers.formatInteger(cartItem.product.price, 3, 'POINT')} + ' '+ VND"></span>-->
-<!--            </div>-->
-
             <div class="product_info col-md-5">
                 <span th:text="${cartItem.product.name}"></span>
                 <br />
-                <!-- Iterate over sizes and display each size's name -->
-<!--                <div th:each="size : ${cartItem.product.sizes}">-->
                     <span th:text="${cartItem.size.name}"></span>
-<!--                    <span th:if="${size.product.id == cartItem.product.id}" th:text="${size.size.name}"></span>-->
-<!--                </div>-->
                 <br />
                 <span th:text="${#numbers.formatInteger(cartItem.product.price, 3, 'POINT')} + ' '+ VND"></span>
             </div>
 
             <div class="quantity col-md-3">
                 <div class="col-md-12 d-flex flex-column align-items-center">
+                    <form th:action="@{/cart/update}" method="post">
+                        <input type="hidden" name="productId" th:value="${cartItem.product.id}">
+                        <input type="hidden" name="sizeId" th:value="${cartItem.size.id}">
                     <div class="input_quantity d-flex justify-content-between align-items-center mb-2">
-                        <button onclick="decreaseQuantity(this)" class="btn btn-sm">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <input
-                                type="text"
-                                id="quantity1"
-                                th:value="${cartItem.quantity}"
-                                class="product-qty form-control"
-                        />
-                        <button onclick="increaseQuantity(this)" class="btn btn-sm">
-                            <i class="fas fa-plus"></i>
-                        </button>
+
+                            <button type="submit" onclick="decreaseQuantity(this)" class="btn btn-sm">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="text" id="quantity1" name="quantity" th:value="${cartItem.quantity}" readonly class="product-qty form-control" />
+    <!--                        <input type="text" th:value="${cartItem.quantity}" class="product-qty form-control" onchange="changeQuantity(this, [[${cartItem.product.id}]], [[${cartItem.size.id}]])" />-->
+
+                            <button type="submit" onclick="increaseQuantity(this)" class="btn btn-sm">
+                                <i class="fas fa-plus"></i>
+                            </button>
+
                     </div>
+                    </form>
                     <div class="remove d-flex justify-content-end">
-                        <button class="btn btn-sm" onclick="clearRow(this)">
-                            <a href="#">Remove</a>
+                        <button class="btn btn-sm" >
+                            <a th:href="@{/cart/delete/{productId}/{sizeId}(productId=${cartItem.product.id}, sizeId = ${cartItem.size.id})}">Remove</a>
                         </button>
                     </div>
                 </div>
             </div>
 
             <div class="total col-md-2 text-right">
-                <span th:text="${#numbers.formatInteger(cartItem.quantity * cartItem.product.price, 3, 'POINT')}"></span>
+<!--                <span th:text="${#numbers.formatInteger(cartItem.quantity * cartItem.product.price, 3, 'POINT')}"></span>-->
+                <span th:text="${#numbers.formatInteger(cartItem.quantity * cartItem.product.price, 3, 'POINT')}" id="total-${cartItem.product.id}-${cartItem.size.id}"></span>
             </div>
         </div>
     </div>
@@ -146,9 +142,6 @@
         </div>
 
         <div class="cart_recap col-md-7 text-md-right"> <!-- Add text-md-right to align content to the right in medium and larger screens -->
-<!--            <span th:text="${#numbers.formatInteger(cartItem.totalPrice, 3, 'POINT')} + ' '+ VND"></span><br>-->
-<!--            <span th:text="${#numbers.formatInteger(cartItem.totalPrice, 3, 'POINT')} + ' '+ VND"></span>-->
-<!--            <span th:unless="${cartItem != null}">N/A</span>-->
             <span th:text="${total}"></span>
             <br>
             <button class="btn btn-dark mt-5">Check out</button>
@@ -160,23 +153,25 @@
 <div th:replace="html/fragments/footer :: footer"></div>
 <!-- Bootstrap JS and Font Awesome JS (if needed) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
-<script>
-    let quantityValue;
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    // Function to handle decreasing quantity
     function decreaseQuantity(button) {
         let quantityInput = button.parentNode.querySelector(".product-qty");
         let currentValue = parseInt(quantityInput.value);
         if (currentValue > 1) {
             quantityInput.value = currentValue - 1;
-
         }
     }
+
+    // Function to handle increasing quantity
     function increaseQuantity(button) {
         let quantityInput = button.parentNode.querySelector(".product-qty");
         let currentValue = parseInt(quantityInput.value);
         quantityInput.value = currentValue + 1;
-
     }
 </script>
+
 </body>
 </html>

@@ -89,7 +89,7 @@ public class ShoppingCartController {
         return "redirect:/product";
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public String update(RedirectAttributes redirectAttributes,
                          @RequestParam("productId") Integer productId,
                          @RequestParam("sizeId") Integer sizeId,
@@ -111,5 +111,34 @@ public class ShoppingCartController {
         // Redirect back to the shopping cart view page
         return "redirect:/cart/view";
     }
+
+//    @GetMapping("/delete/{id}")
+//    public String delete(){
+//
+//    }
+
+    @GetMapping("/delete/{productId}/{sizeId}")
+    public String delete(RedirectAttributes redirectAttributes,
+                         @PathVariable("productId") Integer productId,
+                         @PathVariable("sizeId") Integer sizeId) throws NotFoundException {
+        int userId = 2;
+        Users user = userService.findById(userId);
+
+        // Retrieve the product and size
+        Product product = productService.findById(productId);
+        Size size = sizeService.findById(sizeId);
+
+        shoppingCartService.deleteFromCart(product, size, user);
+
+//        Set<ShoppingCartDetail> cartDetails = cart.getShoppingCartDetails();
+//        model.addAttribute("cartItems", cartDetails);
+//        String formattedTotalPrice = formatPrice(cart.getTotalPrice());
+//        model.addAttribute("total", formattedTotalPrice);
+
+        redirectAttributes.addFlashAttribute("message", "Delete from cart successfully");
+
+        return "redirect:/cart/view";
+    }
+
 
 }

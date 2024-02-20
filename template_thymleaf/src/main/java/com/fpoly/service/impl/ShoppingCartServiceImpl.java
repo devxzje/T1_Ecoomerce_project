@@ -122,4 +122,38 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return null; // Return null if the cart or the product detail is not found
     }
 
+    @Override
+    public ShoppingCart deleteFromCart(Product product, Size size, Users user) {
+        ShoppingCart cart = user.getShoppingCart();
+
+        if (cart != null) {
+            Set<ShoppingCartDetail> cartDetails = cart.getShoppingCartDetails();
+
+            if (cartDetails != null) {
+                // Find the shopping cart detail to be deleted
+                ShoppingCartDetail detailToRemove = cartDetails.stream()
+                        .filter(detail -> detail.getProduct().getId().equals(product.getId()) &&
+                                detail.getSize().getId().equals(size.getId()))
+                        .findFirst()
+                        .orElse(null);
+
+                if (detailToRemove != null) {
+                    // Remove the detail from the set of cart details
+                    cartDetails.remove(detailToRemove);
+
+                    // Update total item count and total price in the shopping cart
+                    cart.setTotalItem(calculateTotalItems(cartDetails));
+                    cart.setTotalPrice(calculateTotalPrice(cartDetails));
+
+                    // Save the updated shopping cart
+                    shoppingCartRepository.save(cart);
+
+                    // Delete the detail from the repository
+                    shoppingCartDetailRepository.delete(detailToRemove);
+                }
+            }
+        }
+        return cart;
+    }
+
 }
