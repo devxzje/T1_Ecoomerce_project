@@ -115,4 +115,25 @@ public class ProductServiceImpl implements ProductService {
         }
         throw new NotFoundException("Can not find product with id: " + id);
     }
+
+    @Override
+    public Page<Product> getByCategory(Integer id, Pageable pageable) {
+        final List<Product> products = productRepository.getByCategory(id);
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+        List<Product> list;
+
+        if (products.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, products.size());
+            list = products.subList(startItem, toIndex);
+        }
+
+        Page<Product> productPage = new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+        return productPage;
+    }
 }

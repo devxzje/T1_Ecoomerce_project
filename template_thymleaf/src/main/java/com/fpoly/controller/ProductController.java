@@ -38,7 +38,6 @@ public class ProductController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(8);
 
-//        Page<Product> products = productService.paginatedProducts(PageRequest.of(currentPage - 1, pageSize));
         Page<Product> products = productService.paginatedFilterProducts(keyword.orElse(""), PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("products", products);
@@ -49,7 +48,30 @@ public class ProductController {
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
-//            model.addAttribute("keyword", keyword.orElse(""));
+        }
+
+        return "html/product/product";
+    }
+
+    @GetMapping("category/{id}")
+    public String getByCategory(Model model,
+                                @RequestParam("page") Optional<Integer> page,
+                                @RequestParam("size") Optional<Integer> size,
+                                @PathVariable("id") Integer id){
+
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(8);
+
+        Page<Product> products = productService.getByCategory(id, PageRequest.of(currentPage-1, pageSize));
+
+        model.addAttribute("products", products);
+
+        int totalPages = products.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
         }
 
         return "html/product/product";

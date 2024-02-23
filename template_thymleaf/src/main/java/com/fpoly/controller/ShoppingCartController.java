@@ -86,7 +86,7 @@ public class ShoppingCartController {
         redirectAttributes.addFlashAttribute("message", "Add to cart successfully");
 
         // Redirect to the product page or wherever you want after adding the product to the cart
-        return "redirect:/product";
+        return "redirect:/cart/view";
     }
 
     @PostMapping("/update")
