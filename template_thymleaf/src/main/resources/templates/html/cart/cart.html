@@ -127,7 +127,7 @@
 
             <div class="total col-md-2 text-right">
 <!--                <span th:text="${#numbers.formatInteger(cartItem.quantity * cartItem.product.price, 3, 'POINT')}"></span>-->
-                <span th:text="${#numbers.formatInteger(cartItem.quantity * cartItem.product.price, 3, 'POINT')}" id="total-${cartItem.product.id}-${cartItem.size.id}"></span>
+                <span th:text="${#numbers.formatInteger(cartItem.quantity * cartItem.product.price, 3, 'POINT')} + ' ' + VND" id="total-${cartItem.product.id}-${cartItem.size.id}"></span>
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@
         <div class="cart_recap col-md-7 text-md-right"> <!-- Add text-md-right to align content to the right in medium and larger screens -->
             <span th:text="${total}"></span>
             <br>
-            <button class="btn btn-dark mt-5">Check out</button>
+            <a class="btn btn-dark mt-5" th:href="@{/order/check-out}">Check out</a>
         </div>
     </div>
 

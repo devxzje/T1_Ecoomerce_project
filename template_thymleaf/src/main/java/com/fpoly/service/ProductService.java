@@ -20,8 +20,6 @@ public interface ProductService {
 
     public Product findById(Integer id) throws NotFoundException;
 
-//    public Paged<Product> getProduct(int pageNumber, int size);
-
     public Page<Product> getByCategory(Integer id, Pageable pageable);
 
 }
